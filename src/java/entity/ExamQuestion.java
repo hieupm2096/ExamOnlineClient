@@ -164,6 +164,7 @@ public class ExamQuestion implements Serializable {
         return "entity.ExamQuestion[ examQuestionPK=" + examQuestionPK + " ]";
     }
 
+    @XmlTransient
     public List<ExamQuestionAnswer> getExamQuestionAnswerList() {
         return examQuestionAnswerList;
     }
