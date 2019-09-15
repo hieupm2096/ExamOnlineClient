@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+    <h:head>
+        <ui:include src="../../WEB-INF/template/css-include.xhtml" />
+        <!--Material Kit CSS-->
+        <!--<h:outputStylesheet name="material-kit.css" library="css" />-->
+
+        <f:metadata>
+            <f:viewAction action="#{examEntranceBean.initQuestionAnswer()}" />
+            
+        </f:metadata>
+        <title>Do Exam | Exam Online System</title>
+    </h:head>
+    <h:body>
+        <div class="wrapper">
+            <h:form id="doExamForm">
+                <div class="main-panel">
+                    <nav class="navbar navbar-transparent navbar-absolute">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <p class="navbar-brand"><strong>#{examEntranceBean.examId}</strong> - <em class="text-info">#{examEntranceBean.examStudent.exam.courseId.name}</em></p>
+                            </div>
+                            <div class="collapse navbar-collapse">
+                                <div class="navbar-form navbar-right" role="search">
+                                    <div class="form-group form-search is-empty">
+                                        <pe:timer
+                                            id="txtHiddenRemainingTime"
+                                            listener="#{examEntranceBean.onExamTimeout()}"
+                                            timeout="#{examEntranceBean.timeoutDuration}"
+                                            singleRun="true"
+                                            format="HH:mm:ss"
+                                            visible="false" />
+                                        <input id="txtRemainingTime" type="text" class="form-control text-danger" readonly="true" />
+                                        <span class="material-input"></span>
+                                    </div>
+                                    <button type="submit" class="btn btn-white btn-round btn-just-icon" disabled="true">
+                                        <i class="material-icons">access_time</i>
+                                        <div class="ripple-container"></div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                    <div class="content">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-offset-1 col-md-10">
+                                    <ui:repeat value="#{examEntranceBean.questions}" var="q" varStatus="i">
+                                        <div class="card" id="question#{i.index}">
+                                            <div class="row col-md-offset-1 col-md-10">
+                                                <h4 class="card-header">Question #{i.index + 1}: #{q.content}</h4>
+                                            </div>
+                                            <div class="row col-md-offset-1 col-md-10">
+                                                <div class="col-md-offset-1 col-md-10">
+                                                    <h:panelGroup rendered="#{examEntranceBean.isQuestionSingleAnswer(q)}">
+                                                        <p:selectOneRadio id="answerList#{i.index}" value="#{examEntranceBean.questionAnswer[i.index][0]}" layout="responsive" columns="1">
+                                                            <f:selectItems value="#{q.examQuestionAnswerList}" var="a" itemValue="#{a.id}" itemLabel="#{a.content}" />
+                                                        </p:selectOneRadio>
+                                                    </h:panelGroup>
+                                                    <h:panelGroup rendered="#{!examEntranceBean.isQuestionSingleAnswer(q)}">
+                                                        <p:selectManyCheckbox value="#{examEntranceBean.questionAnswer[i.index]}" layout="responsive" columns="1">
+                                                            <f:selectItems value="#{q.examQuestionAnswerList}" var="a" itemValue="#{a.id}" itemLabel="#{a.content}" />
+                                                        </p:selectManyCheckbox>
+                                                    </h:panelGroup>
+                                                    <div style=" height: 20px; display: block;" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ui:repeat>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <h:commandButton onclick="if (! confirm('Are you sure you want to submit your exam?')) return false;" action="#{examEntranceBean.finishExam()}" value="Finish Exam" class="btn btn-lg btn-info btn-fill" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </div>
+    </h:body>
+
+    <ui:include src="../../WEB-INF/template/js-include.xhtml" />
+
+    <script>
+        $(function () {
+            $('#doExamForm\\:txtHiddenRemainingTime').on('DOMSubtreeModified', function () {
+                $('#txtRemainingTime').val($('#doExamForm\\:txtHiddenRemainingTime').text());
+            });
+        });
+    </script>
+</html>
+

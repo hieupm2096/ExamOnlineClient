@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <ui:include src="../../WEB-INF/template/css-include.xhtml" />
+        <!--Material Kit CSS-->
+        <h:outputStylesheet name="material-kit.css" library="css" />
+        <title>Exam Result | Exam Online System</title>
+    </h:head>
+    <h:body>
+        <div class="blog-post">
+            <ui:include src="../../WEB-INF/template/nav-include.xhtml" />
+            <div class="page-header header-filter" style="background-image: url('../../resources/img/backgrounds/office2.jpg');">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="card tim-typo" style="font-size: 1.25em;">
+                                <div class="card-header card-header-icon" data-background-color="blue">
+                                    <i class="material-icons">assignment</i>
+                                </div>
+                                <div class="card-content">
+                                    <h4 class="card-title" style="font-family: Roboto, Helvetica, Arial, sans-serif">Result</h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <th></th>
+                                                <th></th>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Exam</td>
+                                                    <td>#{examEntranceBean.examId}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Description</td>
+                                                    <td>#{examEntranceBean.examStudent.exam.description}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Course</td>
+                                                    <td>#{examEntranceBean.examStudent.exam.courseId.name}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Duration</td>
+                                                    <td>#{examEntranceBean.examStudent.exam.duration}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Student</td>
+                                                    <td>#{examEntranceBean.examStudent.student.name}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Start Time</td>
+                                                    <td>                                        
+                                                        <h:outputText value="#{examEntranceBean.examStudent.startTime}">
+                                                            <f:convertDateTime pattern="MMM dd, HH:mm:ss" />
+                                                        </h:outputText>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>End Time</td>
+                                                    <td>
+                                                        <h:outputText value="#{examEntranceBean.examStudent.endTime}">
+                                                            <f:convertDateTime pattern="MMM dd, HH:mm:ss" />
+                                                        </h:outputText>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Result</td>
+                                                    <td>
+                                                        <strong class="text-info">
+                                                            #{examEntranceBean.numberOfCorrectAnswer} / #{examEntranceBean.examStudent.exam.numOfQuestion} - #{examEntranceBean.examStudent.result} points
+                                                        </strong>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </h:body>
+
+    <ui:include src="../../WEB-INF/template/js-include.xhtml" />
+</html>

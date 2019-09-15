@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <nav class="navbar navbar-transparent navbar-absolute">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="http://localhost:8080/ExamOnlineClient/app/exam-entrance.xhtml" class="navbar-brand">Exam Online System</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <h:form id="logoutForm">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="material-icons">face</i>#{authenticationBean.loginStudent.name}
+                            </a>
+                            <ul class="dropdown-menu" data-background-color="blue">
+                                <li>
+                                    <a href="#">Profile</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <h:commandLink action="#{authenticationBean.logout()}" value="Logout" />
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="separator hidden-lg hidden-md"></li>
+                    </ul>
+                </h:form>
+                <div class="navbar-form navbar-right" role="search">
+
+                </div>
+            </div>
+        </div>
+    </nav>
+</ui:composition>

@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                 xmlns:pe="http://primefaces.org/ui/extensions" >
+    <nav class="navbar navbar-transparent navbar-absolute">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <p class="navbar-brand"><strong>#{examEntranceBean.examId}</strong> - <em class="text-info">#{examEntranceBean.examStudent.exam.courseId.name}</em></p>
+            </div>
+            <div class="collapse navbar-collapse">
+                <div class="navbar-form navbar-right" role="search">
+                    <div class="form-group form-search is-empty">
+                        <pe:timer
+                            id="txtHiddenRemainingTime"
+                            listener="#{examEntranceBean.finishExam()}"
+                            timeout="#{examEntranceBean.timeoutDuration}"
+                            singleRun="true"
+                            format="HH:mm:ss"
+                            visible="false" />
+                        <input id="txtRemainingTime" type="text" class="form-control text-danger" readonly="true" />
+                        <span class="material-input"></span>
+                    </div>
+                    <button type="submit" class="btn btn-white btn-round btn-just-icon" disabled="true">
+                        <i class="material-icons">access_time</i>
+                        <div class="ripple-container"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+</ui:composition>

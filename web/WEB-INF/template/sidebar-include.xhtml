@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <div class="sidebar" data-active-color="blue" data-background-color="white">
+        <!--
+    Tip 1: You can change the color of active element of the sidebar using: data-active-color="purple | blue | green | orange | red | rose"
+    Tip 2: you can also add an image using data-image tag
+    Tip 3: you can change the color of the sidebar with data-background-color="white | black"
+        -->
+        <div class="logo">
+            <a href="#" class="simple-text logo-mini">
+                EO
+            </a>
+            <a href="#" class="simple-text logo-normal">
+                Exam Online
+            </a>
+        </div>
+        <div class="sidebar-wrapper">
+            <ul class="nav">
+                <li class="">
+                    <a data-toggle="collapse" href="#exam-info">
+                        <i class="material-icons">description</i>
+                        <p> Exam Info
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse" id="exam-info">
+                        <ul class="nav">
+                            <li class="">
+                                <a href="#">
+                                    <span class="sidebar-mini"> ID </span>
+                                    <span class="sidebar-normal"> Exam ID </span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="#">
+                                    <span class="sidebar-mini"> C </span>
+                                    <span class="sidebar-normal"> Exam Course </span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="#">
+                                    <span class="sidebar-mini"> D </span>
+                                    <span class="sidebar-normal"> Description </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="">
+                    <a data-toggle="collapse" href="#timer">
+                        <i class="material-icons">access_time</i>
+                        <p> Timer
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse" id="timer">
+                        <ul class="nav">
+                            <li class="">
+                                <a href="#">
+                                    <span class="sidebar-mini"> ST </span>
+                                    <span class="sidebar-normal"> #{examEntranceBean.examStudent.exam.startTime} </span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="#">
+                                    <span class="sidebar-mini"> C </span>
+                                    <span class="sidebar-normal"> Exam Course </span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="#">
+                                    <span class="sidebar-mini"> D </span>
+                                    <span class="sidebar-normal"> Description </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</ui:composition>

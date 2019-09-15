@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <ui:include src="../WEB-INF/template/css-include.xhtml" />
+        <!--Material Kit CSS-->
+        <h:outputStylesheet name="material-kit.css" library="css" />
+        <title>Exam Entrance | Exam Online System</title>
+    </h:head>
+    <h:body>
+        <div class="header-2">
+            <ui:include src="../WEB-INF/template/nav-include.xhtml" />
+
+            <div class="page-header header-filter" style="background-image: url('../resources/img/backgrounds/office1.jpg');">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2 text-center">
+                            <h3>
+                                <p>Fill in the form below to access your exam</p>
+                            </h3>
+                            <h4>
+                                <p>If you don't have your <strong>exam ID</strong> or <strong>passcode</strong>, ask your instructor or the teaching assistant/staff.</p>
+                            </h4>
+                        </div>
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="card card-raised card-form-horizontal">
+                                <div class="card-content">
+                                    <h:form id="exam-entrance-form">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <h:inputText 
+                                                        value="#{examEntranceBean.examId}"
+                                                        class="form-control"
+                                                        a:required="true" a:placeholder="Exam ID" a:minlength="7" a:maxlength="7" />
+                                                    <span class="help-block">7 characters</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <h:inputSecret
+                                                        value="#{examEntranceBean.passcode}"
+                                                        class="form-control"
+                                                        a:required="true" a:placeholder="Exam Passcode" a:minlength="7" a:maxlength="7" />
+                                                    <span class="help-block">7 characters</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <h:commandButton action="#{examEntranceBean.accessExam()}" class="btn btn-info btn-block" value="Access" />
+                                            </div>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </h:body>
+
+    <ui:include src="../WEB-INF/template/js-include.xhtml" />
+</html>

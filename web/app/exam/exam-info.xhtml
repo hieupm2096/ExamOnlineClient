@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <f:metadata>
+            <f:viewAction action="#{examEntranceBean.isDoingExamForward()}" />
+            <f:viewAction action="#{examEntranceBean.isDoneExamForward()}" />
+        </f:metadata>
+        <ui:include src="../../WEB-INF/template/css-include.xhtml" />
+        <!--Material Kit CSS-->
+        <h:outputStylesheet name="material-kit.css" library="css" />
+        <title>Exam Info | Exam Online System</title>
+    </h:head>
+    <h:body>
+        <div class="blog-post">
+            <ui:include src="../../WEB-INF/template/nav-include.xhtml" />
+
+            <div class="page-header header-filter" style="background-image: url('../../resources/img/backgrounds/office2.jpg');">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2 text-center">
+                            <h:form>
+                                <h2><strong>Exam #{examEntranceBean.examId}</strong></h2>
+                                <h4>
+                                    <p>#{examEntranceBean.examStudent.exam.description}</p>
+                                    <p>Course: <em>#{examEntranceBean.examStudent.exam.courseId.name}</em></p>
+                                    <p>#{examEntranceBean.examStudent.exam.numOfQuestion} questions / #{examEntranceBean.examStudent.exam.duration} minutes</p>
+                                    <p>Student: #{examEntranceBean.examStudent.student.name}</p>
+                                    <p>
+                                        Status:
+                                        <c:choose>
+                                            <c:when test="#{!examEntranceBean.examStarted}">
+                                                <span class="text-warning">Pending</span>
+                                            </c:when>
+                                            <c:when test="#{examEntranceBean.examStarted and examEntranceBean.examOngoing and examEntranceBean.examStudent.endTime == null}">
+                                                <span class="text-success">Available</span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <span class="text-muted">N/A</span>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </p>
+                                </h4>
+                                <h:commandLink
+                                    action="#{examEntranceBean.startDoingExam()}"
+                                    class="btn btn-info btn-round btn-lg"
+                                    rendered="#{examEntranceBean.examStarted and examEntranceBean.examOngoing and not examEntranceBean.examDone}">
+                                    <i class="material-icons">panorama_fish_eye</i> Start Exam
+                                </h:commandLink>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </h:body>
+
+    <ui:include src="../../WEB-INF/template/js-include.xhtml" />
+</html>
