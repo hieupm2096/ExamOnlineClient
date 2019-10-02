@@ -8,6 +8,7 @@ package entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -52,21 +54,16 @@ public class ExamQuestionAnswer implements Serializable {
     private String content;
     @Column(name = "_is_correct")
     private Boolean isCorrect;
-    @JoinTable(name = "examstudentanswer", joinColumns = {
-        @JoinColumn(name = "_answer_id", referencedColumnName = "_id")}, inverseJoinColumns = {
-        @JoinColumn(name = "_exam_id", referencedColumnName = "_exam_id")
-        , @JoinColumn(name = "_student_id", referencedColumnName = "_student_id")})
-    @ManyToMany
-    private List<ExamStudent> examstudentList;
     @JoinColumns({
         @JoinColumn(name = "_exam_id", referencedColumnName = "_exam_id")
         , @JoinColumn(name = "_question_id", referencedColumnName = "_question_id")})
     @ManyToOne(optional = false)
     private ExamQuestion examQuestion;
-    
     @JoinColumn(name = "_answer_id", referencedColumnName = "_id")
     @ManyToOne(optional = false)
     private Answer answer;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "answer")
+    private List<ExamStudentAnswer> examstudentanswerList;
 
     public ExamQuestionAnswer() {
     }
@@ -103,15 +100,6 @@ public class ExamQuestionAnswer implements Serializable {
     public void setIsCorrect(Boolean isCorrect) {
         this.isCorrect = isCorrect;
     }
-    
-    @XmlTransient
-    public List<ExamStudent> getExamstudentList() {
-        return examstudentList;
-    }
-
-    public void setExamstudentList(List<ExamStudent> examstudentList) {
-        this.examstudentList = examstudentList;
-    }
 
     public ExamQuestion getExamQuestion() {
         return examQuestion;
@@ -127,6 +115,15 @@ public class ExamQuestionAnswer implements Serializable {
 
     public void setAnswer(Answer answer) {
         this.answer = answer;
+    }
+
+    @XmlTransient
+    public List<ExamStudentAnswer> getExamstudentanswerList() {
+        return examstudentanswerList;
+    }
+
+    public void setExamstudentanswerList(List<ExamStudentAnswer> examstudentanswerList) {
+        this.examstudentanswerList = examstudentanswerList;
     }
 
     @Override

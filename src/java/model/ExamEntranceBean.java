@@ -9,6 +9,7 @@ import entity.Exam;
 import entity.ExamQuestion;
 import entity.ExamQuestionAnswer;
 import entity.ExamStudent;
+import entity.ExamStudentAnswer;
 import facade.ExamStudentFacade;
 import java.io.IOException;
 import javax.inject.Named;
@@ -176,26 +177,33 @@ public class ExamEntranceBean implements Serializable {
         }
         
         List<ExamQuestionAnswer> examQuestionAnswerList = new ArrayList<>();
+        List<ExamStudentAnswer> examStudentAnswerList = new ArrayList<>();
 
         numberOfCorrectAnswer = 0;
 
         for (String[] item : questionAnswer) {
             if (item != null && item.length != 0 && item[0] != null) {
                 
-                ExamQuestionAnswer a = findLocalAnswer(item[0], allAnswers);
-                ExamQuestion q = a.getExamQuestion();
+                ExamQuestionAnswer eqa = findLocalAnswer(item[0], allAnswers);
+                ExamQuestion q = eqa.getExamQuestion();
                 if (isQuestionSingleAnswer(q)) {
-                    examQuestionAnswerList.add(a);
-                    if (a.getIsCorrect()) {
+                    ExamStudentAnswer asa = new ExamStudentAnswer();
+                    asa.setAnswer(eqa);
+                    asa.setExamStudent(examStudent);
+                    examStudentAnswerList.add(asa);
+                    if (eqa.getIsCorrect()) {
                         numberOfCorrectAnswer++;
                     }
                 } else {
                     boolean isAllAnswerCorrect = true;
                     for (String answerId : item) {
                         if (answerId != null) {
-                            ExamQuestionAnswer eqa = findLocalAnswer(answerId, allAnswers);
-                            examQuestionAnswerList.add(eqa);
-                            if (!eqa.getIsCorrect()) {
+                            ExamQuestionAnswer _eqa = findLocalAnswer(answerId, allAnswers);
+                            ExamStudentAnswer asa = new ExamStudentAnswer();
+                            asa.setAnswer(_eqa);
+                            asa.setExamStudent(examStudent);
+                            examStudentAnswerList.add(asa);
+                            if (!_eqa.getIsCorrect()) {
                                 isAllAnswerCorrect = false;
                                 break;
                             }
@@ -212,7 +220,7 @@ public class ExamEntranceBean implements Serializable {
         LOGGER.info("Result: " + calculateResult(numberOfCorrectAnswer, questions.size()));
 
         examStudent.setEndTime(new Date());
-        examStudent.setExamQuestionAnswerList(examQuestionAnswerList);
+        examStudent.setExamStudentAnswerList(examStudentAnswerList);
         examStudent.setResult(calculateResult(numberOfCorrectAnswer, questions.size()));
 
         examStudentFacade.edit(examStudent);

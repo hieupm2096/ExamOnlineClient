@@ -68,6 +68,8 @@ public class Course implements Serializable {
     private List<Exam> examList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
     private List<Question> questionList;
+    @OneToMany(mappedBy = "courseId")
+    private List<ExamQuestion> examQuestionList;
     @JoinColumn(name = "_user_id", referencedColumnName = "_id")
     @ManyToOne
     private User userId;
@@ -150,6 +152,14 @@ public class Course implements Serializable {
 
     public void setQuestionList(List<Question> questionList) {
         this.questionList = questionList;
+    }
+
+    public List<ExamQuestion> getExamQuestionList() {
+        return examQuestionList;
+    }
+
+    public void setExamQuestionList(List<ExamQuestion> examQuestionList) {
+        this.examQuestionList = examQuestionList;
     }
 
     public User getUserId() {

@@ -8,14 +8,15 @@ package entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -54,14 +55,14 @@ public class ExamStudent implements Serializable {
     @Size(max = 7)
     @Column(name = "_passcode")
     private String passcode;
-    @ManyToMany(mappedBy = "examstudentList")
-    private List<ExamQuestionAnswer> examQuestionAnswerList;
     @JoinColumn(name = "_exam_id", referencedColumnName = "_id", insertable=false, updatable=false)
     @ManyToOne(optional = false)
     private Exam exam;
     @JoinColumn(name = "_student_id", referencedColumnName = "_id", insertable=false, updatable=false)
     @ManyToOne(optional = false)
     private Student student;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ExamStudent")
+    private List<ExamStudentAnswer> examStudentAnswerList;
 
     public ExamStudent() {
     }
@@ -114,15 +115,6 @@ public class ExamStudent implements Serializable {
         this.passcode = passcode;
     }
 
-    @XmlTransient
-    public List<ExamQuestionAnswer> getExamQuestionAnswerList() {
-        return examQuestionAnswerList;
-    }
-
-    public void setExamQuestionAnswerList(List<ExamQuestionAnswer> examQuestionAnswerList) {
-        this.examQuestionAnswerList = examQuestionAnswerList;
-    }
-
     public Exam getExam() {
         return exam;
     }
@@ -137,6 +129,15 @@ public class ExamStudent implements Serializable {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    @XmlTransient
+    public List<ExamStudentAnswer> getExamStudentAnswerList() {
+        return examStudentAnswerList;
+    }
+
+    public void setExamStudentAnswerList(List<ExamStudentAnswer> examStudentAnswerList) {
+        this.examStudentAnswerList = examStudentAnswerList;
     }
 
     @Override
